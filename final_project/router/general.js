@@ -19,8 +19,9 @@ public_users.get('/',function (req, res) {
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
+    
     const isbn = req.params.isbn; // Retrieve ISBN from request parameters
-    const book = books.find(b => b.isbn === isbn); // Find the book with the matching ISBN
+    const book = books[isbn]; // Access the book directly using the ISBN as a key
 
     if (book) {
         // Return the book details as a JSON response
