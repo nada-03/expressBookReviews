@@ -4,6 +4,13 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+const books = [
+    { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", isbn: "9780743273565" },
+    { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", isbn: "9780061120084" },
+    { id: 3, title: "1984", author: "George Orwell", isbn: "9780451524935" },
+    { id: 4, title: "Pride and Prejudice", author: "Jane Austen", isbn: "9780141439518" },
+    { id: 5, title: "The Catcher in the Rye", author: "J.D. Salinger", isbn: "9780316769488" }
+];
 
 public_users.post("/register", (req,res) => {
   //Write your code here
