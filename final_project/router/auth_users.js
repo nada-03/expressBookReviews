@@ -41,29 +41,21 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-    const isbn = req.params.isbn; // Retrieve ISBN from request parameters
-    const review = req.body.review; // Retrieve review from request body
-    const username = req.user.username; // Retrieve username from the JWT payload
-
-    // Check if the review is provided
-    if (!review) {
-        return res.status(400).json({ message: "Review is required" });
-    }
-
-    // Check if the book exists
-    if (!books[isbn]) {
-        return res.status(404).json({ message: "Book not found" });
-    }
-
-    // Add or update the review for the book
-    if (!books[isbn].reviews) {
-        books[isbn].reviews = {}; // Initialize reviews object if it doesn't exist
-    }
-    books[isbn].reviews[username] = review; // Add or update the review
-
-    return res.status(200).json({ message: "Review added/updated successfully" });
-  //Write your code here
-  
+const isbn = req.params.isbn;
+  let filtered_book = books[isbn]
+  if (filtered_book) {
+      let review = req.query.review;
+      let reviewer = req.session.authorization['username'];
+      if(review) {
+          filtered_book['reviews'][reviewer] = review;
+          books[isbn] = filtered_book;
+      }
+      res.send(`The review for the book with ISBN  ${isbn} has been added/updated.`);
+  }
+  else{
+      res.send("Unable to find this ISBN!");
+  }
+   
 });
 
 module.exports.authenticated = regd_users;
