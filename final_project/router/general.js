@@ -99,5 +99,23 @@ public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
   
 });
+// Importer Axios
+const axios = require('axios');
 
+// URL de l'API pour récupérer la liste des livres
+const apiUrl = 'https://nouahay-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/books';
+
+// Fonction pour récupérer la liste des livres avec Promises
+function getBooksWithPromises() {
+  axios.get(apiUrl)
+    .then(response => {
+      console.log('Liste des livres (Promises) :', response.data);
+    })
+    .catch(error => {
+      console.error('Erreur lors de la récupération des livres :', error);
+    });
+}
+
+// Appeler la fonction
+getBooksWithPromises();
 module.exports.general = public_users;
