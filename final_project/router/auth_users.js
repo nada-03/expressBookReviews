@@ -72,6 +72,35 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: "Invalid or expired token" });
     }
 };
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    const isbn = req.params.isbn;
+    
+    // Check if the user is logged in
+    if (!req.session || !req.session.authorization) {
+        return res.status(403).json({ message: "User not logged in" });
+    }
+
+    const username = req.session.authorization.username; // Get the username from the session
+
+    // Check if the book exists
+    if (!books[isbn]) {
+        return res.status(404).json({ message: "Book not found" });
+    }
+
+    // Get the book's reviews
+    let reviews = books[isbn].reviews;
+
+    // Check if the user has a review to delete
+    if (!reviews[username]) {
+        return res.status(404).json({ message: "Review not found" });
+    }
+
+    // Delete the user's review
+    delete reviews[username];
+
+    return res.json({ message: "Review deleted successfully", reviews });
+});
+
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
