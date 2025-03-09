@@ -8,11 +8,12 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
+app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true,cookie: { secure: true }}))
 
 app.use("/customer/auth/*", function auth(req,res,next){
     if (req.session.authorization) {
-        let token = req.session.authorization['accessToken']; // Access Token
+        let token = req.session.authorization['accessToken'];
+        console.log("Token Found:", token); // Access Token
         
         // Verify JWT token for user authentication
         jwt.verify(token, "access", (err, user) => {
