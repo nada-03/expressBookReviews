@@ -41,7 +41,7 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-const isbn = req.params.isbn;
+  const isbn = req.params.isbn;
   let filtered_book = books[isbn]
   if (filtered_book) {
       let review = req.query.review;
@@ -57,6 +57,21 @@ const isbn = req.params.isbn;
   }
    
 });
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Extract the token from the header
+
+    if (!token) {
+        return res.status(401).json({ message: "User not logged in" });
+    }
+
+    try {
+        const decoded = jwt.verify(token, "secretKey"); // Verify the token
+        req.user = decoded; // Attach the decoded user information to the request object
+        next(); // Proceed to the next middleware or route handler
+    } catch (err) {
+        return res.status(401).json({ message: "Invalid or expired token" });
+    }
+};
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
