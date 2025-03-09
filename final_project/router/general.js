@@ -102,20 +102,22 @@ public_users.get('/review/:isbn',function (req, res) {
 // Importer Axios
 const axios = require('axios');
 
-// URL de l'API pour récupérer la liste des livres
-const apiUrl = 'https://nouahay-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/books';
+// URL de l'API pour récupérer les détails d'un livre par ISBN
+const apiUrl = 'https://nouahay-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai';
 
-// Fonction pour récupérer la liste des livres avec Promises
-function getBooksWithPromises() {
-  axios.get(apiUrl)
+// Fonction pour récupérer les détails d'un livre avec Promises
+function getBookDetailsWithPromises(isbn) {
+  axios.get(`${apiUrl}/${isbn}`)
     .then(response => {
-      console.log('Liste des livres (Promises) :', response.data);
+      console.log('Détails du livre (Promises) :', response.data);
     })
     .catch(error => {
-      console.error('Erreur lors de la récupération des livres :', error);
+      console.error('Erreur lors de la récupération des détails du livre :', error);
     });
 }
 
-// Appeler la fonction
-getBooksWithPromises();
+// Appeler la fonction avec un ISBN spécifique
+getBookDetailsWithPromises(1); // Remplacez 1 par l'ISBN souhaité
+// Importer Axios
+
 module.exports.general = public_users;
