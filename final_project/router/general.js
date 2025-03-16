@@ -103,7 +103,7 @@ public_users.get('/review/:isbn',function (req, res) {
 const axios = require('axios');
 
 // URL de l'API pour récupérer les détails d'un livre par ISBN
-const apiUrl = 'https://nouahay-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai';
+const apiUrl = 'https://nouahay-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/title';
 
 // Fonction pour récupérer les détails d'un livre avec Promises
 function getBookDetailsWithPromises(isbn) {
@@ -117,7 +117,7 @@ function getBookDetailsWithPromises(isbn) {
 }
 
 // Appeler la fonction avec un ISBN spécifique
-getBookDetailsWithPromises(1); // Remplacez 1 par l'ISBN souhaité
+getBookDetailsWithPromises(Fairy tales); // Remplacez 1 par l'ISBN souhaité
 // Importer Axios
 
 module.exports.general = public_users;
